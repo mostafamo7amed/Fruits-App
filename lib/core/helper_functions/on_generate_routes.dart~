@@ -1,0 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:fruits/features/splash/presentation/view/splash_view.dart';
+
+Route<dynamic> onGenerateRoute (RouteSettings settings){
+  switch(settings.name){
+    case  SplashView.routeName:
+      return CupertinoPageRoute(builder: (_) => const SplashView());
+    default:
+      return CupertinoPageRoute(builder: (_) => const SplashView());
+  }
+}
