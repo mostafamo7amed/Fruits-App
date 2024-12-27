@@ -1,8 +1,12 @@
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:fruits/constants.dart';
+import 'package:fruits/core/services/app_references.dart';
 import 'package:fruits/core/utils/app_manager/app_colors.dart';
 import 'package:fruits/core/utils/widgets/custom_button.dart';
 import 'package:fruits/features/onBoarding/view/widgets/on_boarding_page_view.dart';
+
+import '../../auth/presentation/view/login_view.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({super.key});
@@ -47,7 +51,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             SizedBox(height: 30,),
             Visibility(
               visible: currentIndex == 1,maintainAnimation: true,maintainSize: true, maintainState: true,
-                child: CustomButton(onPressed: (){},text: "ابدأ الان",),),
+                child: CustomButton(onPressed: (){
+                  AppReference.setData(key: onBoardingKey, data: true);
+                  Navigator.of(context).pushReplacementNamed(LoginView.routeName);
+                },text: "ابدأ الان",),),
             SizedBox(height: 50,)
           ],
         ),

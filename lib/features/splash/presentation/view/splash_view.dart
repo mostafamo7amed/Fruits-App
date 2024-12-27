@@ -3,7 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fruits/core/utils/app_manager/app_assets.dart';
 import 'package:fruits/features/onBoarding/view/on_boarding_view.dart';
 
+import '../../../../constants.dart';
+import '../../../../core/services/app_references.dart';
 import '../../../../generated/l10n.dart';
+import '../../../auth/presentation/view/login_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -41,9 +44,14 @@ class _SplashViewState extends State<SplashView> {
   }
 
   void executeNavigation() {
+    bool isOnBoarding = AppReference.getData(key: onBoardingKey)??false;
     Future.delayed(const Duration(seconds: 3), () {
       if(!mounted) return;
-      Navigator.pushReplacementNamed(context, OnBoardingView.routeName);
+      if (isOnBoarding) {
+        Navigator.pushReplacementNamed(context, LoginView.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, OnBoardingView.routeName);
+      }
     });
   }
 }
