@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fruits/core/utils/app_manager/app_assets.dart';
 import 'package:fruits/features/onBoarding/view/on_boarding_view.dart';
 
+import '../../../../generated/l10n.dart';
+
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
   static const routeName = 'splash';
@@ -25,7 +27,7 @@ class _SplashViewState extends State<SplashView> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
            children: [
              Row(
-               mainAxisAlignment: MainAxisAlignment.start,
+               mainAxisAlignment: S.delegate.isSupported(Locale('ar'))? MainAxisAlignment.end : MainAxisAlignment.start,
                children: [
                  SvgPicture.asset(AssetsData.plant),
                ],

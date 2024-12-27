@@ -4,5 +4,9 @@ class AssetsData {
   static const splashImage = "$basePath/splash_image.svg";
   static const splashBottom = "$basePath/splash_bottom.svg";
   static const plant = "$basePath/plant.svg";
+  static const onBoardingImage1 = "$basePath/onBoarding_image1.svg";
+  static const onBoardingImage2 = "$basePath/onBoarding_image2.svg";
+  static const onBoardingBackImage1 = "$basePath/background_image1.svg";
+  static const onBoardingBackImage2 = "$basePath/background_image2.svg";
 
 }
