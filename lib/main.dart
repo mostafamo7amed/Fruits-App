@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:fruits/core/helper_functions/on_generate_routes.dart';
 import 'package:fruits/core/services/app_references.dart';
+import 'package:fruits/core/utils/app_manager/app_colors.dart';
 
 import 'features/splash/presentation/view/splash_view.dart';
 import 'generated/l10n.dart';
@@ -31,7 +32,8 @@ class Fruits extends StatelessWidget {
       title: 'Fruits',
       theme: ThemeData(
         fontFamily: 'Cairo',
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        scaffoldBackgroundColor: AppColor.whiteColor,
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColor.primaryColor),
         useMaterial3: true,
       ),
       initialRoute:  SplashView.routeName,

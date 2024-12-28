@@ -8,5 +8,8 @@ class AssetsData {
   static const onBoardingImage2 = "$basePath/onBoarding_image2.svg";
   static const onBoardingBackImage1 = "$basePath/background_image1.svg";
   static const onBoardingBackImage2 = "$basePath/background_image2.svg";
+  static const facebook = "$basePath/facebook_icon.svg";
+  static const apple = "$basePath/apple_icon.svg";
+  static const google = "$basePath/google_icon.svg";
 
 }
