@@ -4,6 +4,7 @@ import 'package:fruits/core/utils/app_manager/app_assets.dart';
 import 'package:fruits/core/utils/app_manager/app_styles.dart';
 import 'package:fruits/core/utils/widgets/build_app_bar.dart';
 import 'package:fruits/core/utils/widgets/custom_text_form_field.dart';
+import 'package:fruits/features/auth/presentation/view/signup_view.dart';
 import 'package:fruits/features/auth/presentation/view/widgets/divider_widget.dart';
 import 'package:fruits/features/auth/presentation/view/widgets/social_button.dart';
 
@@ -76,7 +77,7 @@ class LoginView extends StatelessWidget {
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            // Navigator.of(context).pushReplacementNamed(SignUpView.routeName);
+                             Navigator.of(context).pushNamed(SignupView.routeName);
                           },
                         text: 'قم بإنشاء حساب',
                         style: Styles.semiBold16

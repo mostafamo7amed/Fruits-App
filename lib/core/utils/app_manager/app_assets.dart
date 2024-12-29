@@ -11,5 +11,6 @@ class AssetsData {
   static const facebook = "$basePath/facebook_icon.svg";
   static const apple = "$basePath/apple_icon.svg";
   static const google = "$basePath/google_icon.svg";
+  static const check = "$basePath/check.svg";
 
 }
