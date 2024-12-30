@@ -27,8 +27,15 @@ class AuthRepoImpl extends AuthRepo{
   }
 
   @override
-  Future<Either<Failure, AuthEntity>> loginWithEmailAndPassword({required String email, required String password}) {
-    // TODO: implement loginWithEmailAndPassword
-    throw UnimplementedError();
+  Future<Either<Failure, AuthEntity>> loginWithEmailAndPassword({required String email, required String password}) async {
+    try {
+      User user = await firebaseAuthServices.signInWithEmailAndPassword(email: email, password: password);
+      AuthEntity authEntity = AuthModel.fromFirebaseAuth(user);
+      return Right(authEntity);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure('حدث خطأ ما الرجاء المحاولة في وقت لاحق'));
+    }
   }
 }

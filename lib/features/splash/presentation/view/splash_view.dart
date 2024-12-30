@@ -26,19 +26,21 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-           children: [
-             Row(
-               mainAxisAlignment: S.delegate.isSupported(Locale('ar'))? MainAxisAlignment.end : MainAxisAlignment.start,
-               children: [
-                 SvgPicture.asset(AssetsData.plant),
-               ],
-             ),
-             SvgPicture.asset(AssetsData.splashImage),
-             SvgPicture.asset(AssetsData.splashBottom),
-
-           ],
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+             children: [
+               Row(
+                 mainAxisAlignment: S.delegate.isSupported(Locale('ar'))? MainAxisAlignment.end : MainAxisAlignment.start,
+                 children: [
+                   SvgPicture.asset(AssetsData.plant),
+                 ],
+               ),
+               SvgPicture.asset(AssetsData.splashImage),
+               SvgPicture.asset(AssetsData.splashBottom),
+          
+             ],
+          ),
         ),
     );
   }

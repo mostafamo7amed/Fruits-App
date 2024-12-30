@@ -58,6 +58,12 @@ class _SignupViewState extends State<SignupView> {
                           height: 24,
                         ),
                         CustomTextFormField(
+                          validator:  (value) {
+                            if (value!.isEmpty) {
+                              return 'الاسم كامل مطلوب';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             name = value!;
                           },
@@ -68,6 +74,12 @@ class _SignupViewState extends State<SignupView> {
                           height: 16,
                         ),
                         CustomTextFormField(
+                          validator:  (value) {
+                            if (value!.isEmpty) {
+                              return 'البريد الالكتروني مطلوب';
+                            }
+                            return null;
+                          },
                           onSaved: (value) {
                             email = value!;
                           },
@@ -78,6 +90,7 @@ class _SignupViewState extends State<SignupView> {
                           height: 16,
                         ),
                         CustomPasswordFormField(
+
                           onSaved: (value) {
                             password = value!;
                           },
@@ -162,6 +175,12 @@ class _CustomPasswordFormFieldState extends State<CustomPasswordFormField> {
   @override
   Widget build(BuildContext context) {
     return CustomTextFormField(
+      validator:  (value) {
+        if (value!.isEmpty) {
+          return 'كلمة المرور مطلوبة';
+        }
+        return null;
+      },
       obscureText: isObscure,
       onSaved: (value) {
         widget.onSaved(value!);
