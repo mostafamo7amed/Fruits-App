@@ -1,14 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fruits/core/utils/app_manager/app_assets.dart';
 import 'package:fruits/core/utils/app_manager/app_colors.dart';
 import 'package:fruits/core/utils/app_manager/app_styles.dart';
 
 import 'custom_check_box.dart';
 
 class TermsAndConditions extends StatefulWidget {
-  const TermsAndConditions({super.key});
+  const TermsAndConditions({super.key, required this.isChecked});
+
+  final ValueChanged<bool> isChecked;
 
   @override
   State<TermsAndConditions> createState() => _TermsAndConditionsState();
@@ -25,6 +25,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           onChecked: (value) {
             setState(() {
               termsAccepted = value;
+              widget.isChecked(value);
             });
           },
         ),

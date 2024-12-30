@@ -32,7 +32,7 @@ class LoginView extends StatelessWidget {
                 height: 24,
               ),
               CustomTextFormField(
-                controller: TextEditingController(),
+                onSaved: (p0) {},
                 hintText: 'البريد الالكتروني',
                 keyboardType: TextInputType.emailAddress,
               ),
@@ -40,7 +40,7 @@ class LoginView extends StatelessWidget {
                 height: 16,
               ),
               CustomTextFormField(
-                controller: TextEditingController(),
+                onSaved: (p0) {},
                 hintText: 'كلمة المرور',
                 keyboardType: TextInputType.visiblePassword,
                 suffixIcon: IconButton(
@@ -77,7 +77,8 @@ class LoginView extends StatelessWidget {
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                             Navigator.of(context).pushNamed(SignupView.routeName);
+                            Navigator.of(context)
+                                .pushNamed(SignupView.routeName);
                           },
                         text: 'قم بإنشاء حساب',
                         style: Styles.semiBold16
