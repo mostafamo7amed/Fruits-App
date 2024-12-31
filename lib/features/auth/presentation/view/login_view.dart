@@ -1,21 +1,23 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fruits/core/utils/app_manager/app_assets.dart';
 import 'package:fruits/core/utils/app_manager/app_styles.dart';
 import 'package:fruits/core/utils/widgets/build_app_bar.dart';
+import 'package:fruits/core/utils/widgets/custom_progress_hud.dart';
 import 'package:fruits/core/utils/widgets/custom_text_form_field.dart';
 import 'package:fruits/features/auth/presentation/view/signup_view.dart';
+import 'package:fruits/features/auth/presentation/view/widgets/custom_password_field.dart';
 import 'package:fruits/features/auth/presentation/view/widgets/divider_widget.dart';
 import 'package:fruits/features/auth/presentation/view/widgets/social_button.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-
 import '../../../../core/helper_functions/snack_bar.dart';
 import '../../../../core/services/git_it_services.dart';
 import '../../../../core/utils/app_manager/app_colors.dart';
 import '../../../../core/utils/widgets/custom_button.dart';
 import '../../domain/repos/auth_repo.dart';
-import '../cubits/auth_cubit.dart';
+import '../cubits/signIn_cubit/sign_in_cubit.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -33,24 +35,20 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(getIt<AuthRepo>()),
-      child: Scaffold(
-        appBar:
-            buildAppBar(context, title: 'تسجيل الدخول', showBackButton: true),
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16.0,
-          ),
-          child: BlocConsumer<AuthCubit, AuthState>(
-            listener: (context, state) {
-              if (state is AuthSuccess) {}
-              if (state is AuthError) {
-                showSnackBar(context, state.message);
-              }
-            },
-            builder: (context, state) {
-              return ModalProgressHUD(
-                inAsyncCall: state is AuthLoading ? true : false,
+      create: (context) => SignInCubit(getIt.get<AuthRepo>()),
+      child: BlocConsumer<SignInCubit, SignInState>(listener: (context, state) {
+        if (state is SignInSuccess) {}
+        if (state is SignInError) {
+          showSnackBar(context, state.message);
+        }
+      }, builder: (context, state) {
+        return CustomProgressHud(
+          isLoading: state is SignInLoading ? true : false,
+          child: Scaffold(
+              appBar: buildAppBar(context,
+                  title: 'تسجيل الدخول', showBackButton: true),
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Form(
@@ -99,7 +97,7 @@ class _LoginViewState extends State<LoginView> {
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
                               formKey.currentState!.save();
-                              BlocProvider.of<AuthCubit>(context)
+                              BlocProvider.of<SignInCubit>(context)
                                   .loginWithEmailAndPassword(
                                       email: email!, password: password!);
                               autoValidateMode = AutovalidateMode.disabled;
@@ -141,23 +139,32 @@ class _LoginViewState extends State<LoginView> {
                           height: 16,
                         ),
                         SocialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<SignInCubit>().signInWithGoogle();
+                          },
                           assetName: AssetsData.google,
                           title: 'تسجيل بواسطة جوجل',
                         ),
                         SizedBox(
                           height: 16,
                         ),
-                        SocialButton(
-                          onPressed: () {},
-                          assetName: AssetsData.apple,
-                          title: 'تسجيل بواسطة أبل',
+                        if(Platform.isIOS)
+                        Column(
+                          children: [
+                            SocialButton(
+                              onPressed: () {},
+                              assetName: AssetsData.apple,
+                              title: 'تسجيل بواسطة أبل',
+                            ),
+                            SizedBox(
+                              height: 16,
+                            ),
+                          ],
                         ),
-                        SizedBox(
-                          height: 16,
-                        ),
                         SocialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            context.read<SignInCubit>().signInWithFacebook();
+                          },
                           assetName: AssetsData.facebook,
                           title: 'تسجيل بواسطة فيسبوك',
                         ),
@@ -168,11 +175,9 @@ class _LoginViewState extends State<LoginView> {
                     ),
                   ),
                 ),
-              );
-            },
-          ),
-        ),
-      ),
+              )),
+        );
+      }),
     );
   }
 }

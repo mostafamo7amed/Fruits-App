@@ -1,7 +1,9 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:fruits/core/error/exception.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthServices {
   Future<User> createUserWithEmailAndPassword(
@@ -62,4 +64,58 @@ class FirebaseAuthServices {
       throw CustomException('حدث خطأ ما الرجاء المحاولة في وقت لاحق');
     }
   }
+
+  Future<User> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser!.authentication;
+      final OAuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+      final UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+      return userCredential.user!;
+    } on FirebaseAuthException catch (e) {
+      log('Exception: in FirebaseAuthServices.signInWithGoogle ${e.toString()}');
+      if (e.code == 'network-request-failed') {
+        throw CustomException('تعذر الاتصال بالانترنت');
+      } else {
+        throw CustomException('حدث خطأ ما الرجاء المحاولة في وقت لاحق');
+      }
+    } catch (e) {
+      log('Exception: in FirebaseAuthServices.signInWithGoogle ${e.toString()}');
+      throw CustomException('حدث خطأ ما الرجاء المحاولة في وقت لاحق');
+    }
+  }
+
+  Future<User> signInWithFacebook() async {
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+      final OAuthCredential facebookAuthCredential = FacebookAuthProvider
+          .credential(loginResult.accessToken!.tokenString);
+      UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+      return userCredential.user!;
+    } on FirebaseAuthException catch (e) {
+      log('Exception: in FirebaseAuthServices.signInWithFacebook ${e.toString()}');
+      if (e.code == 'network-request-failed') {
+        throw CustomException('تعذر الاتصال بالانترنت');
+      } else if (e.code == 'account-exists-with-different-credential') {
+        throw CustomException('الحساب موجود بالفعل بمعلومات اخرى حاول التسجيل بطريقة اخرى');
+      }
+      else {
+        throw CustomException('حدث خطأ ما الرجاء المحاولة في وقت لاحق');
+      }
+    } catch (e) {
+      log('Exception: in FirebaseAuthServices.signInWithFacebook ${e.toString()}');
+      throw CustomException('حدث خطأ ما الرجاء المحاولة في وقت لاحق');
+    }
+
+  }
+
+
+
+
 }
