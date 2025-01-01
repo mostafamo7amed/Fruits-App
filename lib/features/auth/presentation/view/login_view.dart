@@ -46,7 +46,7 @@ class _LoginViewState extends State<LoginView> {
           isLoading: state is SignInLoading ? true : false,
           child: Scaffold(
               appBar: buildAppBar(context,
-                  title: 'تسجيل الدخول', showBackButton: true),
+                  title: 'تسجيل الدخول', showBackButton: false),
               body: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: SingleChildScrollView(

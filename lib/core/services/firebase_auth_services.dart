@@ -10,13 +10,15 @@ class FirebaseAuthServices {
       {required String email,
       required String password,
       required String name}) async {
+    User? user;
     try {
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
-      return credential.user!;
+      user = credential.user!;
+      return user;
     } on FirebaseAuthException catch (e) {
       log('Exception: in FirebaseAuthServices.createUserWithEmailAndPassword ${e.toString()}');
       if (e.code == 'weak-password') {
@@ -115,7 +117,9 @@ class FirebaseAuthServices {
 
   }
 
-
+  Future<void> deleteUser() async {
+    await FirebaseAuth.instance.currentUser!.delete();
+  }
 
 
 }

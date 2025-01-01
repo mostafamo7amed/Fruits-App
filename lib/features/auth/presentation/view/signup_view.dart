@@ -46,7 +46,7 @@ class _SignupViewState extends State<SignupView> {
             isLoading: state is SignupLoading ? true : false,
             child: Scaffold(
                 appBar: buildAppBar(
-                    context, title: 'حساب جديد', showBackButton: true),
+                    context, title: 'حساب جديد', showBackButton: false),
                 body: SingleChildScrollView(
                   physics: BouncingScrollPhysics(),
                   child: Padding(
@@ -115,7 +115,7 @@ class _SignupViewState extends State<SignupView> {
                                   context
                                       .read<SignupCubit>()
                                       .createUserWithEmailAndPassword(
-                                      email: email, password: password);
+                                      email: email, password: password,name: name);
                                 } else {
                                   showSnackBar(context,
                                       'يجب الموافقة على الشروط والاحكام');
