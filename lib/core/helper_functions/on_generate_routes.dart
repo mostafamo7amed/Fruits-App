@@ -5,6 +5,7 @@ import 'package:fruits/features/splash/presentation/view/splash_view.dart';
 
 import '../../features/auth/presentation/view/login_view.dart';
 import '../../features/auth/presentation/view/signup_view.dart';
+import '../../features/home/presentation/view/home_view.dart';
 
 Route<dynamic> onGenerateRoute (RouteSettings settings){
   switch(settings.name){
@@ -16,6 +17,8 @@ Route<dynamic> onGenerateRoute (RouteSettings settings){
       return CupertinoPageRoute(builder: (_) => const SignupView());
     case  OnBoardingView.routeName:
       return CupertinoPageRoute(builder: (_) => const OnBoardingView());
+    case  HomeView.routeName:
+      return CupertinoPageRoute(builder: (_) => const HomeView());
     default:
       return CupertinoPageRoute(builder: (_) => const Scaffold());
   }

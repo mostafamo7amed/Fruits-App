@@ -8,11 +8,14 @@ import 'package:fruits/features/auth/domain/repos/auth_repo.dart';
 import 'package:fruits/features/auth/presentation/view/widgets/custom_password_field.dart';
 import 'package:fruits/features/auth/presentation/view/widgets/terms_and_conditions.dart';
 
+import '../../../../constants.dart';
 import '../../../../core/helper_functions/snack_bar.dart';
+import '../../../../core/services/app_references.dart';
 import '../../../../core/utils/app_manager/app_colors.dart';
 import '../../../../core/utils/app_manager/app_styles.dart';
 import '../../../../core/utils/widgets/build_app_bar.dart';
 import '../../../../core/utils/widgets/custom_button.dart';
+import '../../../home/presentation/view/home_view.dart';
 import '../cubits/signup_cubit/signup_cubit.dart';
 
 class SignupView extends StatefulWidget {
@@ -36,7 +39,11 @@ class _SignupViewState extends State<SignupView> {
       create: (context) => SignupCubit(getIt.get<AuthRepo>()),
       child:  BlocConsumer<SignupCubit, SignupState>(
         listener: (context, state) {
-          if (state is SignupSuccess) {}
+          if (state is SignupSuccess) {
+            AppReference.setData(key: authKey, data: true);
+            showSnackBar(context, 'تم انشاء الحساب بنجاح');
+            Navigator.pushReplacementNamed(context, HomeView.routeName);
+          }
           if (state is SignupError) {
             showSnackBar(context, state.message);
           }

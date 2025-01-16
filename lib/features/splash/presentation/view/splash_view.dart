@@ -7,6 +7,7 @@ import '../../../../constants.dart';
 import '../../../../core/services/app_references.dart';
 import '../../../../generated/l10n.dart';
 import '../../../auth/presentation/view/login_view.dart';
+import '../../../home/presentation/view/home_view.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
@@ -45,10 +46,15 @@ class _SplashViewState extends State<SplashView> {
 
   void executeNavigation() {
     bool isOnBoarding = AppReference.getData(key: onBoardingKey)??false;
+    bool isAuthorized = AppReference.getData(key: authKey)??false;
     Future.delayed(const Duration(seconds: 3), () {
       if(!mounted) return;
       if (isOnBoarding) {
-        Navigator.pushReplacementNamed(context, LoginView.routeName);
+        if (isAuthorized) {
+          Navigator.pushReplacementNamed(context, HomeView.routeName);
+        }else {
+          Navigator.pushReplacementNamed(context, LoginView.routeName);
+        }
       } else {
         Navigator.pushReplacementNamed(context, OnBoardingView.routeName);
       }

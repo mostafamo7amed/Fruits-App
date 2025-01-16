@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fruits/constants.dart';
+import 'package:fruits/core/services/app_references.dart';
 import 'package:fruits/core/utils/app_manager/app_assets.dart';
 import 'package:fruits/core/utils/app_manager/app_styles.dart';
 import 'package:fruits/core/utils/widgets/build_app_bar.dart';
@@ -16,6 +18,7 @@ import '../../../../core/helper_functions/snack_bar.dart';
 import '../../../../core/services/git_it_services.dart';
 import '../../../../core/utils/app_manager/app_colors.dart';
 import '../../../../core/utils/widgets/custom_button.dart';
+import '../../../home/presentation/view/home_view.dart';
 import '../../domain/repos/auth_repo.dart';
 import '../cubits/signIn_cubit/sign_in_cubit.dart';
 
@@ -37,7 +40,10 @@ class _LoginViewState extends State<LoginView> {
     return BlocProvider(
       create: (context) => SignInCubit(getIt.get<AuthRepo>()),
       child: BlocConsumer<SignInCubit, SignInState>(listener: (context, state) {
-        if (state is SignInSuccess) {}
+        if (state is SignInSuccess) {
+          AppReference.setData(key: authKey, data: true);
+          Navigator.of(context).pushReplacementNamed(HomeView.routeName);
+        }
         if (state is SignInError) {
           showSnackBar(context, state.message);
         }

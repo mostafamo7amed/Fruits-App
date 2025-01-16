@@ -12,5 +12,11 @@ class AssetsData {
   static const apple = "$basePath/apple_icon.svg";
   static const google = "$basePath/google_icon.svg";
   static const check = "$basePath/check.svg";
+  static const profileImage = "$basePath/profile_image.png";
+  static const notification = "$basePath/notification_icon.svg";
+  static const search = "$basePath/search_icon.svg";
+  static const filter = "$basePath/filter_icon.svg";
+  static const featuredBG = "$basePath/featured_bg.svg";
+  static const testImage = "$basePath/test_image.png";
 
 }
